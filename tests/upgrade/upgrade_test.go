@@ -32,10 +32,10 @@ var _ = Describe("{UpgradeVolumeDriver}", func() {
 		for i := 0; i < Inst().ScaleFactor; i++ {
 			contexts = append(contexts, ScheduleAndValidate(fmt.Sprintf("upgradevolumedriver-%d", i))...)
 		}
-
+		fmt.Print("Start test")
 		Step("start the upgrade of volume driver", func() {
-			images := getImages(Inst().StorageDriverUpgradeVersion)
-			err := Inst().V.UpgradeDriver(images)
+			err := Inst().V.UpgradeDriver(Inst().StorageDriverUpgradeEndpointURL,
+				Inst().StorageDriverUpgradeEndpointVersion)
 			Expect(err).NotTo(HaveOccurred())
 		})
 
@@ -69,6 +69,7 @@ func getImages(version string) []volume.Image {
 	return images
 }
 
+/* We don't support downgrade volume drive, so comment it out
 var _ = PDescribe("{UpgradeDowngradeVolumeDriver}", func() {
 	It("upgrade and downgrade volume driver and ensure everything is running fine", func() {
 		var contexts []*scheduler.Context
@@ -99,7 +100,7 @@ var _ = PDescribe("{UpgradeDowngradeVolumeDriver}", func() {
 		ValidateAndDestroy(contexts, opts)
 	})
 })
-
+*/
 var _ = AfterSuite(func() {
 	PerformSystemCheck()
 	CollectSupport()

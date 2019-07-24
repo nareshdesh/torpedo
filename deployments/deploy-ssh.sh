@@ -33,14 +33,14 @@ if [ -n "$FOCUS_TESTS" ]; then
     FOCUS_ARG="--focus={$focusRegex}"
 fi
 
-UPGRADE_VERSION_ARG=""
-if [ -n "${STORAGE_UPGRADE_VERSION}" ]; then
-    UPGRADE_VERSION_ARG="--storage-driver-upgrade-version=$STORAGE_UPGRADE_VERSION"
+UPGRADE_ENDPOINT_URL_ARG=""
+if [ -n "${UPGRADE_ENDPOINT_URL}" ]; then
+    UPGRADE_ENDPOINT_URL_ARG="--storage-upgrade-endpoint-url=$UPGRADE_ENDPOINT_URL"
 fi
 
-UPGRADE_BASE_VERSION_ARG=""
-if [ -n "${STORAGE_BASE_VERSION}" ]; then
-    UPGRADE_BASE_VERSION_ARG="--storage-driver-base-version=$STORAGE_BASE_VERSION"
+UPGRADE_ENDPOINT_VERSION_ARG=""
+if [ -n "${UPGRADE_ENDPOINT_VERSION}" ]; then
+    UPGRADE_ENDPOINT_VERSION_ARG="--storage-upgrade-endpoint-version=$UPGRADE_ENDPOINT_VERSION"
 fi
 
 if [ -n "${PROVISIONER}" ]; then
@@ -213,8 +213,8 @@ spec:
             "--minimun-runtime-mins", "$MIN_RUN_TIME",
             "--chaos-level", "$CHAOS_LEVEL",
             "--provisioner", "$PROVISIONER",
-            "$UPGRADE_VERSION_ARG",
-            "$UPGRADE_BASE_VERSION_ARG" ]
+            "$UPGRADE_ENDPOINT_URL_ARG",
+            "$UPGRADE_ENDPOINT_VERSION_ARG" ]
     tty: true
     volumeMounts: [${VOLUME_MOUNTS}]
     env:
